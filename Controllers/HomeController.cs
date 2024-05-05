@@ -1,12 +1,8 @@
 using k8s.KubeConfigModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Practicas_ASP.NET.Methods;
 using Practicas_ASP.NET.Models;
 using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace Practicas_ASP.NET.Controllers
 {
