@@ -4,13 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
+using Practicas_ASP.NET.Methods;
 using Practicas_ASP.NET.Models;
 
 namespace Practicas_ASP.NET.Controllers
 {
     public class AuthRegistroController : Controller
     {
+        private Encriptar encript = new Encriptar();
         private readonly RegistroContext _context;
 
         public AuthRegistroController(RegistroContext context)
@@ -58,6 +61,10 @@ namespace Practicas_ASP.NET.Controllers
             if (ModelState.IsValid)
             {
                 authRegistro.JwtId = Guid.NewGuid();
+
+                //Encripto la contrasena en SQL
+                authRegistro.Password = encript.EncryptarPassword(authRegistro.Password);
+
                 _context.Add(authRegistro);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

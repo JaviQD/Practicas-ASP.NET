@@ -12,12 +12,13 @@ namespace Practicas_ASP.NET.Controllers
 {
     public class HomeController : Controller
     {
-        private Jwt jwt = new Jwt();
+        private readonly Jwt _jwt;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, Jwt jwt)
         {
             _logger = logger;
+            _jwt = jwt;
         }
 
         public IActionResult Index()
@@ -58,19 +59,16 @@ namespace Practicas_ASP.NET.Controllers
         [HttpPost]
         public IActionResult Authenticate([FromBody] UserCredentials credentials)
         {
-            // Validar las credenciales del usuario aquí (puedes usar autenticación basada en formularios, base de datos, etc.)
-            // Por ejemplo:
-            if (credentials.UserName == "usuario" && credentials.Password == "password")
-            {
-                // Si las credenciales son válidas, se crea un JWT
-                var token = jwt.GenerarToken(credentials.UserName);
+
+            // Si las credenciales son válidas, se crea un JWT
+            var token = _jwt.GenerarToken(credentials.UserName, credentials.Password);
+
+            if(token != null)
                 return Ok(new { token });
-            }
+
             else
-            {
-                // Si las credenciales son inválidas, se devuelve un error de autenticación
                 return Unauthorized();
-            }
+
         }
     }
 }
