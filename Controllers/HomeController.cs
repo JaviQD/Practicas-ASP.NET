@@ -66,5 +66,19 @@ namespace Practicas_ASP.NET.Controllers
                 return Unauthorized();
 
         }
+
+        [HttpPost]
+        public IActionResult CheckLogin([FromBody] AuthRegistro _authRegistro)
+        {
+            // Si las credenciales son válidas, se crea un JWT
+            var token = _jwt.GetToken(_authRegistro.Username, _authRegistro.Mail, _authRegistro.Password);
+
+            if (token != null)
+                return Ok(new { token });
+
+            else
+                return Unauthorized();
+
+        }
     }
 }

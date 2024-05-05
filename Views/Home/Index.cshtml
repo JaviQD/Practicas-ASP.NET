@@ -22,34 +22,30 @@
         <p class="message">Inicia sesion y mira nuestras promociones</p>
         <div class="flex">
             <label>
-                <input required="" placeholder="" type="text" class="input">
+                <input required="" placeholder="" type="text" class="input" id="username">
                 <span>Nombre</span>
             </label>
         </div>
 
         <label>
-            <input required="" placeholder="" type="email" class="input">
+            <input required="" placeholder="" type="email" class="input" id="email">
             <span>Correo</span>
         </label>
 
         <label>
-            <input required="" placeholder="" type="password" class="input">
+            <input required="" placeholder="" type="password" class="input" id="password">
             <span>Clave</span>
         </label>
         <label>
-            <input required="" placeholder="" type="password" class="input">
+            <input required="" placeholder="" type="password" class="input" id="confirmPassword">
             <span>Confirmar clave</span>
         </label>
 
-        <button class="submit">Iniciar sesion</button>
+        <button type="button" class="submit" id="loginButton">Iniciar sesion</button>
         <p class="signin">No tienes una cuenta?<a asp-controller="AuthRegistro" asp-action="Index"><br>Registrate</a> </p>
     </form>
 </body>
 
-<form id="form1" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <asp:Timer ID="Timer1" runat="server" Interval="60000" OnTick="Timer1_Tick"></asp:Timer>
-</form>
 
 @* <footer class="border-top footer text-muted">
     <div class="container">
@@ -58,14 +54,46 @@
 </footer> *@
 </html>
 
-@section Scripts {
-    <script>
-        function reloadPage() {
-            location.reload();
+<script>
+    document.getElementById('loginButton').addEventListener('click', function () {
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('confirmPassword').value;
+        
+        debugger;
+
+        if (password !== confirmPassword) {
+            alert('Confirma bien la contraseña');
+            return;
         }
 
-        $(document).ready(function () {
-            setInterval(reloadPage, 60000); // Recarga la página cada 60 segundos (60000 milisegundos)
-        });
-    </script>
-}
+        // Construir el objeto JSON para enviar en la solicitud
+        var requestBody = {
+            Username: username,
+            Mail: email,
+            Password: password
+        };
+
+        fetch('http://localhost:43880/Home/CheckLogin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then(response => response.json())
+            .then(data => {
+                var token = data.token;
+                if (token) {
+                    alert('¡Inicio de sesión exitoso! Token: ' + token);
+                } else {
+                    alert('Error al iniciar sesión. Credenciales incorrectas.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al intentar iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
+            });
+    });
+</script>
