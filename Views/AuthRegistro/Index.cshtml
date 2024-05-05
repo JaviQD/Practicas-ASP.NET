@@ -18,9 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Mail)
             </th>
-            <th>
+            <th style="display: none;">
                 @Html.DisplayNameFor(model => model.Password)
-            </th>
+            </th style="display: none;">
             <th>
                 @Html.DisplayNameFor(model => model.AuditFechaGeneracion)
             </th>
@@ -36,10 +36,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Mail)
             </td>
-            <td>
+            <td style="display: none;">
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
-            <td>
+            <td style="display: none;">
                 @Html.DisplayFor(modelItem => item.AuditFechaGeneracion)
             </td>
             <td>
