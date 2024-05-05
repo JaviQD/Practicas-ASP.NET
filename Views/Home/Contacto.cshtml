@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Contacto";
+}
+
+<style>
+    p {
+        color: grey;
+        font-size: 1.0em;
+    }
+</style>
+
+
+<script>
+    function GetTime() {
+        var url = "@Url.Action("GetTime", "Home")";
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                alert(data.time);
+            });
+    }
+</script>
+
+
+
+<h1>
+    Pagina de contacto
+</h1>
+
+
+<div>
+    <p>
+        Esta pagina contiene los datos para poder contactarnos: <br />
+        tel: 3025358176 <br />
+        correo: javi@gmail.com
+    </p>
+
+    <button onclick="GetTime()">Obtener Fecha</button>
+</div>
