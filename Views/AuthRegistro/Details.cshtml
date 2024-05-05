@@ -22,16 +22,19 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Mail)
         </dd>
-        <dt class = "col-sm-2">
+
+        @* Oculto la clave y la fecha de la vista del usuario *@
+
+        <dt class="col-sm-2" style="display: none;">
             @Html.DisplayNameFor(model => model.Password)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10" style="display: none;">
             @Html.DisplayFor(model => model.Password)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2" style="display: none;">
             @Html.DisplayNameFor(model => model.AuditFechaGeneracion)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10" style="display: none;">
             @Html.DisplayFor(model => model.AuditFechaGeneracion)
         </dd>
     </dl>
