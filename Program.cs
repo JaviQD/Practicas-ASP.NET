@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Practicas_ASP.NET.Methods;
 using Practicas_ASP.NET.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<RegistroContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
+
+builder.Services.AddScoped<Jwt>();
 
 var app = builder.Build();
 
