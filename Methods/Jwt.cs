@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 
 namespace Practicas_ASP.NET.Methods
 {
@@ -11,11 +12,29 @@ namespace Practicas_ASP.NET.Methods
     {
         private readonly RegistroContext _context;
         private Encriptar encript = new Encriptar();
-        private RandomKey _securityKey = new RandomKey();
 
         public Jwt(RegistroContext context) 
         {
             _context = context;
+        }
+
+        public string GenerarRandomKey(int length)
+        {
+            const string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var randomBytes = new byte[length];
+
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(randomBytes);
+            }
+
+            var result = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = validChars[randomBytes[i] % validChars.Length];
+            }
+
+            return new string(result);
         }
 
         public string GenerarToken(string username, string password)
@@ -30,7 +49,7 @@ namespace Practicas_ASP.NET.Methods
                 return null;
             }
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_securityKey.GenerarRandomKey(32)));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GenerarRandomKey(32)));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -57,13 +76,10 @@ namespace Practicas_ASP.NET.Methods
                                                      u.Password == encript.EncryptarPassword(password) &&
                                                      u.Mail == mail);
 
-            if (user == null)
-            {
-                // Usuario o contraseña inválidos, devolver null o lanzar una excepción, según tus necesidades.
-                return null;
-            }
+            if (user == null) return null;
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_securityKey.GenerarRandomKey(32)));
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GenerarRandomKey(32)));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
