@@ -60,8 +60,6 @@
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;
         var confirmPassword = document.getElementById('confirmPassword').value;
-        
-        debugger;
 
         if (password !== confirmPassword) {
             alert('Confirma bien la contraseña');
@@ -87,6 +85,7 @@
                 var token = data.token;
                 if (token) {
                     alert('¡Inicio de sesión exitoso! Token: ' + token);
+
                 } else {
                     alert('Error al iniciar sesión. Credenciales incorrectas.');
                 }
