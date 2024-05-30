@@ -43,7 +43,7 @@ namespace Practicas_ASP.NET.Methods
             var user = _context.AuthRegistros
                                 .FirstOrDefault(u => u.Username == username && u.Password == encript.EncryptarPassword(password));
 
-            if (user == null)
+            if (user is null)
             {
                 // Usuario o contraseña inválidos, devolver null o lanzar una excepción, según tus necesidades.
                 return null;
@@ -58,12 +58,14 @@ namespace Practicas_ASP.NET.Methods
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // Identificador único del token
             };
 
-            var token = new JwtSecurityToken(
+            var token = new JwtSecurityToken
+            (
                 issuer: "LocaltHost43880", // Emisor del token
                 audience: "Today", // Audiencia del token
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30), // Tiempo de expiración del token (30 minutos en este ejemplo)
-                signingCredentials: credentials);
+                signingCredentials: credentials
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
@@ -76,7 +78,7 @@ namespace Practicas_ASP.NET.Methods
                                                      u.Password == encript.EncryptarPassword(password) &&
                                                      u.Mail == mail);
 
-            if (user == null) return null;
+            if (user is null) return null;
 
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GenerarRandomKey(32)));
@@ -88,12 +90,14 @@ namespace Practicas_ASP.NET.Methods
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // Identificador único del token
             };
 
-            var token = new JwtSecurityToken(
+            var token = new JwtSecurityToken
+            (
                 issuer: "LocaltHost43880", // Emisor del token
                 audience: "Today", // Audiencia del token
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(35), // Tiempo de expiración del token (30 minutos en este ejemplo)
-                signingCredentials: credentials);
+                signingCredentials: credentials
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

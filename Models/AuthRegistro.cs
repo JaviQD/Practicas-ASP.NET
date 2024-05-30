@@ -13,6 +13,7 @@ public partial class AuthRegistro
 
     [Required(ErrorMessage = "El correo electronico es obligatorio.")]
     [Display(Name = "Correo electronico")]
+    [EmailAddress(ErrorMessage = "El campo Correo debe ser una dirección de correo electrónico válida")]
     public string? Mail { get; set; }
 
     [Required(ErrorMessage = "La Contraseña es obligatoria.")]
