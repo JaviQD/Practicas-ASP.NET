@@ -61,6 +61,7 @@
         var password = document.getElementById('password').value;
         var confirmPassword = document.getElementById('confirmPassword').value;
 
+        debugger;
         if (password !== confirmPassword) {
             alert('Confirma bien la contraseña');
             return;
@@ -73,20 +74,29 @@
             Password: password
         };
 
-        fetch('http://localhost:43880/Home/CheckLogin', {
+        fetch('http://localhost:43880/Login/Auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestBody)
         })
-            .then(response => response.json())
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error('Credenciales Incorrectas');
+                }
+
+                return response.json();
+            })
+
             .then(data => {
                 var token = data.token;
-                if (token) {
-                    alert('¡Inicio de sesión exitoso! Token: ' + token);
 
-                } else {
+                if (token) {
+                    alert('Inicio de sesion exitoso!!' + token);
+                }
+                else{
                     alert('Error al iniciar sesión. Credenciales incorrectas.');
                 }
             })

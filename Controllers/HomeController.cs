@@ -59,7 +59,7 @@ namespace Practicas_ASP.NET.Controllers
             // Si las credenciales son válidas, se crea un JWT
             var token = _jwt.GenerarToken(credentials.UserName, credentials.Password);
 
-            if(token != null)
+            if(token is not null)
                 return Ok(new { token });
 
             else
@@ -67,13 +67,14 @@ namespace Practicas_ASP.NET.Controllers
 
         }
 
+        [Route("Login/Auth")]
         [HttpPost]
         public IActionResult CheckLogin([FromBody] AuthRegistro _authRegistro)
         {
             // Si las credenciales son válidas, se crea un JWT
             var token = _jwt.GetToken(_authRegistro.Username, _authRegistro.Mail, _authRegistro.Password);
 
-            if (token != null)
+            if (token is not null)
                 return Ok(new { token });
 
             else
