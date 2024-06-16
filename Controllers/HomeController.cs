@@ -1,7 +1,7 @@
 using k8s.KubeConfigModels;
 using Microsoft.AspNetCore.Mvc;
-using Practicas_ASP.NET.Methods;
 using Practicas_ASP.NET.Models;
+using Practicas_ASP.NET.Services.JwtSevices;
 using System.Diagnostics;
 
 namespace Practicas_ASP.NET.Controllers

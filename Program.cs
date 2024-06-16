@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Practicas_ASP.NET.Methods;
 using Practicas_ASP.NET.Models;
+using Practicas_ASP.NET.Services.JwtSevices;
 
 var builder = WebApplication.CreateBuilder(args);
 
