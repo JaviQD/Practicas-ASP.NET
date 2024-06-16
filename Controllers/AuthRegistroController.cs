@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Practicas_ASP.NET.Methods;
 using Practicas_ASP.NET.Models;
+using Practicas_ASP.NET.Services.JwtSevices;
 
 namespace Practicas_ASP.NET.Controllers
 {
     public class AuthRegistroController : Controller
     {
-        private Encriptar encript = new Encriptar();
         private readonly RegistroContext _context;
+        private IJwt controllerJwt;
 
         public AuthRegistroController(RegistroContext context)
         {
@@ -57,7 +57,7 @@ namespace Practicas_ASP.NET.Controllers
                 authRegistro.JwtId = Guid.NewGuid();
 
                 //Encripto la contrasena en SQL
-                authRegistro.Password = encript.EncryptarPassword(authRegistro.Password);
+                authRegistro.Password = controllerJwt.EncryptarPassword(authRegistro.Password);
 
                 _context.Add(authRegistro);
                 await _context.SaveChangesAsync();
@@ -82,9 +82,6 @@ namespace Practicas_ASP.NET.Controllers
             return View(authRegistro);
         }
 
-        // POST: AuthRegistro/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("JwtId,Username,Mail,Password,AuditFechaGeneracion")] AuthRegistro authRegistro)

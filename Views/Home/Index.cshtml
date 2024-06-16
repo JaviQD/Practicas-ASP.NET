@@ -62,6 +62,7 @@
         var confirmPassword = document.getElementById('confirmPassword').value;
 
         debugger;
+
         if (password !== confirmPassword) {
             alert('Confirma bien la contraseña');
             return;
@@ -74,7 +75,7 @@
             Password: password
         };
 
-        fetch('http://localhost:43880/Login/Auth', {
+        fetch('http://localhost:5148/Login/Auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
